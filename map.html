@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/vega@5.30.0"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.20.1"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.26.0"></script>
+</head>
+<body>
+  <div id="vis"/>
+  <script>
+    const spec = {
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 1500,
+  "height": 900,
+  "title": {
+    "text": "NObs: Averaged Number of Observations per Country",
+    "fontSize": 30,
+    "align": "center",
+    "subtitle":"subtitle",
+    "subtitleFontSize": 20
+  },
+  "data": {
+    "url": "https://raw.githubusercontent.com/Cian2001/irs_datasets/main/world_map.json",
+    "format": {"property": "features"}
+  },
+  "projection": {"type": "equalEarth"},
+  "transform": [
+    {
+      "lookup": "properties.iso_a3",
+      "from": {
+        "key": "country",
+        "fields": ["NObs"],
+        "data": {
+          "url": "https://raw.githubusercontent.com/eulauer/frank/refs/heads/main/map.csv",
+          "format": {"type": "csv"}
+        }
+      }
+    }
+  ],
+  "mark": {
+    "type": "geoshape",
+    "stroke": "#141010",
+    "strokeWidth": 0.5
+  },
+  "encoding": {
+    "color": {
+      "field": "NObs",
+      "type": "nominal",
+      "scale": {"scheme": "oranges"},
+      "legend":{"title":"NObs","titleFontSize":20},
+    },
+    "tooltip": [
+      {"field": "properties.iso_a3", "title": "country"},
+      {
+        "field": "NObs",
+        "type": "nominal",
+        "title": "NObs"
+      }
+    ]
+  },
+  "config": {"mark": {"invalid": null}}
+};
+    vegaEmbed("#vis", spec, {mode: "vega-lite"}).then(console.log).catch(console.warn);
+  </script>
+</body>
+</html>
