@@ -1,3 +1,6 @@
+latitude,longitude,elevation,utc_offset_seconds,timezone,timezone_abbreviation
+52.54149,12.5390625,31.0,0,GMT,GMT
+
 time,rain_sum (mm)
 2024-10-28,1.30
 2024-10-29,1.50
